@@ -4,6 +4,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog as MatDialog, MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subject, Subscription, switchMap, takeUntil } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ProjectService, SaveMode } from '../_services/project.service';
@@ -1744,7 +1745,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private openOnboardingWizardIfNeeded() {
-        if (this.onboardingWizardHandled || this.onboardingWizardOpened ||
+        if (!environment.serverEnabled || this.onboardingWizardHandled || this.onboardingWizardOpened ||
             this.settingsService.getSettings()?.hideEditorOnboarding ||
             this.settingsService.getSettings()?.secureEnabled) {
             this.onboardingWizardHandled = true;

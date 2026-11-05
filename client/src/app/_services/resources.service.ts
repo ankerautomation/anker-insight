@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
+import { environment } from '../../environments/environment';
 import { EndPointApi } from '../_helpers/endpointapi';
 import { ResourceItem, Resources, ResourceType } from '../_models/resources';
 
@@ -15,6 +16,9 @@ export class ResourcesService {
     constructor(private http: HttpClient) { }
 
     getResources(type: ResourceType): Observable<Resources> {
+        if (!environment.serverEnabled) {
+            return of(<Resources>{ groups: [] });
+        }
         let header = new HttpHeaders({ 'Content-Type': 'application/json' });
         let params = { type: type };
         return this.http.get<Resources>(this.endPointConfig + '/api/resources/' + type, { headers: header, params: params });
