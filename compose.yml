@@ -1,0 +1,12 @@
+services:
+  anker-insight:
+    image: anker-insight:latest
+    build: .
+    restart: unless-stopped
+    volumes:
+      - './appdata:/usr/src/app/anker-insight/server/_appdata'
+      - './db:/usr/src/app/anker-insight/server/_db'
+      - './logs:/usr/src/app/anker-insight/server/_logs'
+      - './images:/usr/src/app/anker-insight/server/_images'
+    ports:
+      - '1881:1881'

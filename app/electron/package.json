@@ -1,0 +1,76 @@
+{
+    "name": "anker-insight",
+    "version": "0.0.1",
+    "description": "Anker Insight is a web-based Process Visualization (SCADA/HMI/Dashboard) software. With Anker Insight you can create modern process visualizations with individual designs for your machines and real-time data display.",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "package": "electron-builder --dir",
+        "dist": "electron-builder",
+        "postinstall": "electron-builder install-app-deps"
+    },
+    "author": "Anker Automation",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "39.8.10",
+        "electron-builder": "25.1.8"
+    },
+    "dependencies": {
+        "sqlite3": "5.1.7"
+    },
+    "overrides": {
+        "tar": "7.5.20"
+    },
+    "build": {
+        "appId": "com.ankerautomation.ankerinsight",
+        "productName": "Anker Insight",
+        "asar": false,
+        "files": [
+            "main.js",
+            "*.html",
+            "server/**/*",
+            "client/dist/**/*",
+            "icons/**/*"
+        ],
+        "extraResources": [
+            {
+                "from": "server/node_modules",
+                "to": "app/server/node_modules",
+                "filter": [
+                    "!**/.bin/**"
+                ]
+            }
+        ],
+        "directories": {
+            "output": "dist"
+        },
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": ["x64"]
+                }
+            ],
+            "icon": "icons/anker-insight-logo.ico"
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "appimage",
+                    "arch": ["x64", "arm64"]
+                }
+            ],
+            "executableName": "anker-insight",
+            "icon": "icons/anker-insight-logo.png"
+        },
+        "mac": {
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": ["x64", "arm64"]
+                }
+            ],
+            "icon": "icons/anker-insight-logo.icns"
+        }
+    }
+}
