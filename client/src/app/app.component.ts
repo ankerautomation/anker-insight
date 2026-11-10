@@ -63,7 +63,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 		).subscribe(() => this.heartbeatService.setActivity(true));
 
 
-		this.serverErrorBanner$ = combineLatest([
+		// Without a server (demo build) there is no connection to lose, so never show the banner
+		this.serverErrorBanner$ = !environment.serverEnabled ? of(false) : combineLatest([
 			this.hmiService.onServerConnection$,
 			this.authService.currentUser$
 		]).pipe(
